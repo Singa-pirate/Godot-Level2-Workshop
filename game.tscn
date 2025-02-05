@@ -12,39 +12,43 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(140, 119, 1776, 127, 17
 
 [node name="Game" type="Node"]
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="Level1" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Level1"]
+y_sort_enabled = true
 navigation_polygon = SubResource("NavigationPolygon_1iwoq")
 use_edge_connections = false
 
-[node name="Map" parent="NavigationRegion2D" instance=ExtResource("1_vx5yf")]
+[node name="Map" parent="Level1/NavigationRegion2D" instance=ExtResource("1_vx5yf")]
 position = Vector2(126, 105)
 
-[node name="Rock3" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock3" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(1284, 940)
 
-[node name="Rock2" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock2" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(1541, 527)
 
-[node name="Rock" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(642, 470)
 
-[node name="Rock4" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock4" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(764, 722)
 
-[node name="Rock5" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock5" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(793, 454)
 
-[node name="Rock6" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+[node name="Rock6" parent="Level1/NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(428, 893)
 
-[node name="Goblin" parent="." instance=ExtResource("2_k1qr0")]
+[node name="Goblin" parent="Level1" instance=ExtResource("2_k1qr0")]
 position = Vector2(339, 264)
 
-[node name="Goblin2" parent="." instance=ExtResource("2_k1qr0")]
+[node name="Goblin2" parent="Level1" instance=ExtResource("2_k1qr0")]
 position = Vector2(949, 303)
 
-[node name="Goblin3" parent="." instance=ExtResource("2_k1qr0")]
+[node name="Goblin3" parent="Level1" instance=ExtResource("2_k1qr0")]
 position = Vector2(299, 522)
 
-[node name="Player" parent="." instance=ExtResource("3_2b4x0")]
+[node name="Player" parent="Level1" instance=ExtResource("3_2b4x0")]
 position = Vector2(983, 661)
