@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://bo77q1ensq18"]
+[gd_scene load_steps=6 format=4 uid="uid://bo77q1ensq18"]
 
 [ext_resource type="Texture2D" uid="uid://we81q6cbvrod" path="res://assets/Tiny Swords/Terrain/Ground/Tilemap_Flat.png" id="1_iksox"]
 
@@ -14,12 +14,6 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-48, -12, 48, -12, 48, 24, -48, 24, -48, -12)])
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_j7k2v"]
-vertices = PackedVector2Array(48, 48, -48, 48, -48, -48, 48, -48)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)])
-agent_radius = 0.0
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4gt82"]
 texture = ExtResource("1_iksox")
 0:0/size_in_atlas = Vector2i(3, 3)
@@ -32,7 +26,6 @@ texture = ExtResource("1_iksox")
 3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_70ld7")
 3:3/size_in_atlas = Vector2i(6, 6)
 3:3/0 = 0
-3:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_j7k2v")
 
 [sub_resource type="TileSet" id="TileSet_k6rmk"]
 physics_layer_0/collision_layer = 4
