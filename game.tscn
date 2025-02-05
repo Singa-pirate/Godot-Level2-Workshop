@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://yjlrreldumg4" path="res://player.tscn" id="3_2b4x0"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1iwoq"]
-vertices = PackedVector2Array(1800, 111, 1800, 1203, 1618.45, 551.789, 1613.67, 496.781, 1593.79, 569.602, 1361.45, 964.789, 1356.67, 909.781, 1533.81, 577.227, 1332.88, 883.492, 1488.86, 483.688, 1469.31, 525.227, 719.453, 494.789, 714.672, 439.781, 1589.88, 470.492, 132, 111, 1549.11, 465.828, 650.109, 408.828, 690.883, 413.492, 1478.87, 556.633, 1292.11, 878.828, 1231.86, 896.688, 694.789, 512.602, 1212.31, 938.227, 132, 1203, 1336.79, 982.602, 1276.81, 990.227, 1221.87, 969.633, 634.812, 520.227, 579.867, 499.633, 570.312, 468.227, 589.859, 426.688)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1, 5, 6), PackedInt32Array(7, 4, 6, 8), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(0, 3, 13), PackedInt32Array(14, 0, 13, 15), PackedInt32Array(16, 14, 15, 9, 17), PackedInt32Array(18, 7, 8, 19, 11), PackedInt32Array(11, 10, 18), PackedInt32Array(11, 19, 20), PackedInt32Array(21, 11, 20, 22, 23), PackedInt32Array(24, 5, 1), PackedInt32Array(24, 1, 23, 25), PackedInt32Array(26, 25, 23), PackedInt32Array(22, 26, 23), PackedInt32Array(27, 21, 23), PackedInt32Array(28, 27, 23), PackedInt32Array(28, 23, 14, 29), PackedInt32Array(30, 29, 14), PackedInt32Array(16, 30, 14), PackedInt32Array(17, 9, 12)])
+vertices = PackedVector2Array(731, 496, 724.328, 464.328, 730, 487, 853, 748, 1534, 582, 1591, 578, 1329, 874, 1299, 871, 1800, 111, 1800, 1203, 1630, 553, 1618, 496, 1478, 560, 841, 691, 725.789, 442.695, 721.383, 450.328, 719, 439, 740.859, 410.688, 1373, 966, 1361, 909, 882, 480, 870, 423, 1495, 479, 1493, 482.453, 1488.86, 483.688, 814, 773, 1216.79, 928.695, 1212, 937, 517, 919, 505, 862, 757, 777, 779, 653, 786, 509, 809, 656, 843, 505, 1473.79, 515.695, 1469, 524, 1586, 461, 132, 111, 1556, 458, 838, 388, 1238, 892, 1236, 895.453, 1231.86, 896.688, 687, 404, 692, 521, 718, 674, 635, 525, 716, 677.453, 711.859, 678.688, 1221, 973, 132, 1203, 478, 944, 1334, 991, 1277, 995, 421, 948, 365, 926, 356, 890, 360.789, 881.695, 375.859, 849.688, 380, 848.453, 382, 845, 443, 824, 696.789, 710.695, 692, 719, 473, 827, 579, 503, 701, 755, 747, 406, 745, 409.453, 596, 422, 594, 425.453, 589.859, 426.688, 808, 385, 657, 401, 574.789, 458.695, 570, 467)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 4, 3, 13), PackedInt32Array(14, 15, 16, 17), PackedInt32Array(5, 10, 9, 18, 19), PackedInt32Array(20, 21, 22, 23, 24), PackedInt32Array(25, 26, 27, 28, 29, 30), PackedInt32Array(31, 0, 2, 32, 33), PackedInt32Array(34, 20, 24, 35, 36, 13, 33), PackedInt32Array(8, 11, 37), PackedInt32Array(38, 8, 37, 39), PackedInt32Array(38, 39, 22, 40), PackedInt32Array(5, 19, 6), PackedInt32Array(3, 7, 41), PackedInt32Array(3, 41, 42, 43), PackedInt32Array(3, 43, 26, 25), PackedInt32Array(17, 16, 44), PackedInt32Array(36, 12, 13), PackedInt32Array(32, 34, 33), PackedInt32Array(45, 0, 31, 46), PackedInt32Array(47, 45, 46, 48, 49), PackedInt32Array(28, 27, 50, 51, 52), PackedInt32Array(53, 18, 9), PackedInt32Array(53, 9, 51, 54), PackedInt32Array(50, 54, 51), PackedInt32Array(55, 52, 51), PackedInt32Array(56, 55, 51), PackedInt32Array(56, 51, 38, 57), PackedInt32Array(58, 57, 38, 59), PackedInt32Array(60, 59, 38, 61), PackedInt32Array(62, 61, 38), PackedInt32Array(49, 63, 64, 65, 62, 38, 66), PackedInt32Array(67, 30, 29, 65), PackedInt32Array(64, 67, 65), PackedInt32Array(68, 69, 17, 44, 38), PackedInt32Array(70, 71, 72, 38), PackedInt32Array(22, 21, 40), PackedInt32Array(38, 40, 73), PackedInt32Array(38, 73, 68), PackedInt32Array(38, 44, 74), PackedInt32Array(38, 74, 70), PackedInt32Array(38, 72, 75, 76), PackedInt32Array(66, 47, 49), PackedInt32Array(66, 38, 76)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(140, 119, 1776, 127, 1787, 1201, 152, 1199)])
 
 [node name="Game" type="Node"]
@@ -27,6 +27,15 @@ position = Vector2(1541, 527)
 
 [node name="Rock" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
 position = Vector2(642, 470)
+
+[node name="Rock4" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+position = Vector2(764, 722)
+
+[node name="Rock5" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+position = Vector2(793, 454)
+
+[node name="Rock6" parent="NavigationRegion2D" instance=ExtResource("2_5xh08")]
+position = Vector2(428, 893)
 
 [node name="Goblin" parent="." instance=ExtResource("2_k1qr0")]
 position = Vector2(339, 264)

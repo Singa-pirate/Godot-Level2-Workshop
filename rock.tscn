@@ -15,4 +15,6 @@ polygon = PackedVector2Array(-45, -35, 9, -51, 44, -47, 63, -26, 67, 20, 49, 33,
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 vertices = PackedVector2Array(-7, 55, -63, 33, -72, -3, -46, -48, 15, -69, 45, -66, 77, -31, 89, 26, 50, 51)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
 avoidance_layers = 2

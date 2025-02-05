@@ -131,7 +131,7 @@ shape = SubResource("CapsuleShape2D_sbfct")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 target_desired_distance = 30.0
-path_max_distance = 50.0
+path_max_distance = 15.0
 avoidance_enabled = true
 radius = 20.0
 avoidance_mask = 3
