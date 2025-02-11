@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dhm3k0sy8xvjm"]
+[gd_scene load_steps=21 format=3 uid="uid://dhm3k0sy8xvjm"]
 
 [ext_resource type="Script" path="res://goblin.gd" id="1_boaf0"]
 [ext_resource type="Texture2D" uid="uid://dqtgnw2rf171k" path="res://assets/Tiny Swords/Factions/Goblins/Troops/Torch/Blue/Torch_Blue.png" id="1_qu61w"]
@@ -111,7 +111,44 @@ animations = [{
 radius = 8.10462
 height = 47.3967
 
-[node name="Goblin" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_maltj"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_smh57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ni4xc"]
+_data = {
+"RESET": SubResource("Animation_smh57"),
+"hurt": SubResource("Animation_maltj")
+}
+
+[node name="Goblin" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
 collision_layer = 2
 collision_mask = 0
@@ -136,5 +173,10 @@ path_max_distance = 15.0
 avoidance_enabled = true
 radius = 20.0
 avoidance_mask = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ni4xc")
+}
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

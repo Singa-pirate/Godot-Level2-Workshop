@@ -1,21 +1,26 @@
 extends CharacterBody2D
 
+const MAX_HEALTH = 100
 
 @onready var SPEED = randi_range(70, 130)
+@onready var health = MAX_HEALTH
 
 @onready var player : CharacterBody2D = get_parent().get_node("Player")
 @onready var navigation_agent = $NavigationAgent2D
 @onready var target
 @onready var sprite = $Sprite
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
 	call_deferred("navigation_setup")
 
 func _physics_process(delta: float) -> void:
+	if health <= 0:
+		die()
+	
 	follow_player()
 	
 	if navigation_agent.is_navigation_finished():
-		print("finished")
 		sprite.play("idle")
 		return
 	
@@ -39,13 +44,22 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func navigation_setup():
-	await get_tree().physics_frame
 	target = player
 
 
 func follow_player():
 	if target:
 		navigation_agent.target_position = target.global_position
+
+
+func take_damage(damage):
+	health = max(health - damage, 0)
+	animation_player.play("hurt")
+	print(health)
+	
+
+func die():
+	queue_free()
 
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
