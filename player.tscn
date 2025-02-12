@@ -1,15 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://yjlrreldumg4"]
+[gd_scene load_steps=39 format=3 uid="uid://yjlrreldumg4"]
 
 [ext_resource type="Texture2D" uid="uid://behsasv71g7k0" path="res://assets/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_p7vhx"]
 [ext_resource type="Script" path="res://player.gd" id="1_ubvl6"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oqbxs"]
-atlas = ExtResource("1_p7vhx")
-region = Rect2(0, 384, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_33kjh"]
-atlas = ExtResource("1_p7vhx")
-region = Rect2(192, 384, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70gcn"]
 atlas = ExtResource("1_p7vhx")
@@ -26,14 +18,6 @@ region = Rect2(768, 384, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ekaij"]
 atlas = ExtResource("1_p7vhx")
 region = Rect2(960, 384, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yhkx3"]
-atlas = ExtResource("1_p7vhx")
-region = Rect2(0, 576, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j3bc5"]
-atlas = ExtResource("1_p7vhx")
-region = Rect2(192, 576, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ly10g"]
 atlas = ExtResource("1_p7vhx")
@@ -82,6 +66,18 @@ region = Rect2(768, 1344, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3a735"]
 atlas = ExtResource("1_p7vhx")
 region = Rect2(960, 1344, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80a80"]
+atlas = ExtResource("1_p7vhx")
+region = Rect2(0, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv47f"]
+atlas = ExtResource("1_p7vhx")
+region = Rect2(192, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auuaw"]
+atlas = ExtResource("1_p7vhx")
+region = Rect2(384, 768, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wo50f"]
 atlas = ExtResource("1_p7vhx")
@@ -135,12 +131,6 @@ region = Rect2(960, 192, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oqbxs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_33kjh")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_70gcn")
 }, {
 "duration": 1.0,
@@ -154,15 +144,9 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_1",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yhkx3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j3bc5")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ly10g")
 }, {
@@ -177,7 +161,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_2",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -206,7 +190,21 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_3",
-"speed": 5.0
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80a80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv47f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auuaw")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -259,7 +257,44 @@ animations = [{
 radius = 12.0
 height = 44.1977
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_v5ro2"]
+resource_name = "hurt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sohyh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6e1yv"]
+_data = {
+"RESET": SubResource("Animation_sohyh"),
+"hurt": SubResource("Animation_v5ro2")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_mask = 5
 script = ExtResource("1_ubvl6")
@@ -267,9 +302,7 @@ script = ExtResource("1_ubvl6")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 17)
 sprite_frames = SubResource("SpriteFrames_etkbo")
-animation = &"attack_3"
-frame = 7
-frame_progress = 1.0
+animation = &"hurt"
 offset = Vector2(0, -10)
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -284,6 +317,7 @@ collision_mask = 2
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack1_Hitbox"]
 position = Vector2(-1, -4)
 polygon = PackedVector2Array(22, -29, 39, -27, 61, -22, 79, -12, 86, 8, 80, 44, 70, 50, 50, 48, 26, 44, 10, 39, 12, -23)
+disabled = true
 
 [node name="Attack2_Hitbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -291,6 +325,7 @@ collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack2_Hitbox"]
 polygon = PackedVector2Array(-19, 46, 13, 59, 36, 57, 53, 43, 83, 19, 84, -12, 64, -21, 36, -14, 17, 7)
+disabled = true
 
 [node name="Attack3_Hitbox" type="Area2D" parent="."]
 collision_layer = 0
@@ -298,9 +333,24 @@ collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack3_Hitbox"]
 polygon = PackedVector2Array(-55, -39, -70, -18, -66, 7, -59, 22, -47, 43, -25, 62, 3, 69, 32, 66, 46, 54, 55, 36, 57, 11, 56, -14, 44, -35, 31, -50, -3, -56, -32, -51)
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Attack3_Hitbox"]
+polygon = PackedVector2Array(-55, -39, -70, -18, -66, 7, -59, 22, -47, 43, -25, 62, 3, 69, 32, 66, 46, 54, 55, 36, 57, 11, 56, -14, 44, -35, 31, -50, -3, -56, -32, -51)
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6e1yv")
+}
+
+[node name="prev_attack_state_timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="animation_looped" from="Sprite" to="." method="_on_sprite_animation_looped"]
 [connection signal="body_entered" from="Attack1_Hitbox" to="." method="_on_attack_1_hitbox_body_entered"]
 [connection signal="body_entered" from="Attack2_Hitbox" to="." method="_on_attack_2_hitbox_body_entered"]
 [connection signal="body_entered" from="Attack3_Hitbox" to="." method="_on_attack_3_hitbox_body_entered"]
+[connection signal="timeout" from="prev_attack_state_timer" to="." method="_on_prev_attack_state_timer_timeout"]

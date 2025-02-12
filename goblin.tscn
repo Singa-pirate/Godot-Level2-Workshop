@@ -1,7 +1,43 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhm3k0sy8xvjm"]
+[gd_scene load_steps=30 format=3 uid="uid://dhm3k0sy8xvjm"]
 
 [ext_resource type="Script" path="res://goblin.gd" id="1_boaf0"]
 [ext_resource type="Texture2D" uid="uid://dqtgnw2rf171k" path="res://assets/Tiny Swords/Factions/Goblins/Troops/Torch/Blue/Torch_Blue.png" id="1_qu61w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k73rb"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7xlw"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7air"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlcp2"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(576, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1cmrv"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(768, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7win"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8js5p"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(0, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6s05"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(192, 576, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0ssr"]
+atlas = ExtResource("1_qu61w")
+region = Rect2(384, 576, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fvbhw"]
 atlas = ExtResource("1_qu61w")
@@ -59,6 +95,48 @@ region = Rect2(960, 192, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_k73rb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7xlw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7air")
+}],
+"loop": false,
+"name": &"attack_casting",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlcp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1cmrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7win")
+}],
+"loop": false,
+"name": &"attacking",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8js5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6s05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0ssr")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fvbhw")
 }, {
 "duration": 1.0,
@@ -111,6 +189,21 @@ animations = [{
 radius = 8.10462
 height = 47.3967
 
+[sub_resource type="Animation" id="Animation_smh57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_maltj"]
 resource_name = "hurt"
 length = 0.6
@@ -125,21 +218,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_smh57"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ni4xc"]
@@ -157,8 +235,7 @@ script = ExtResource("1_boaf0")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_vfpfe")
-animation = &"idle"
-autoplay = "idle"
+animation = &"attacking"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, 24)
@@ -167,8 +244,7 @@ scale = Vector2(0.939943, 0.843935)
 shape = SubResource("CapsuleShape2D_sbfct")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 10.0
-target_desired_distance = 30.0
+target_desired_distance = 60.0
 path_max_distance = 15.0
 avoidance_enabled = true
 radius = 20.0
@@ -179,4 +255,22 @@ libraries = {
 "": SubResource("AnimationLibrary_ni4xc")
 }
 
+[node name="Attack_hitbox" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack_hitbox"]
+polygon = PackedVector2Array(2, -14, 33, -9, 60, 1, 71, 19, 52, 41, 29, 48, 0, 43)
+disabled = true
+
+[node name="AttackCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AttackCastDelayTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="body_entered" from="Attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]
+[connection signal="timeout" from="AttackCastDelayTimer" to="." method="_on_attack_cast_delay_timer_timeout"]
