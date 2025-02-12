@@ -6,7 +6,7 @@ const damage = 10
 const ATTACK_COOLDOWN_SECONDS = 0.5
 const ATTACK_CAST_DELAY_SECONDS = 0.5
 
-enum GOBLIN_STATE { IDLE, RUN, ATTACK_COOLDOWN, ATTACK_CASTING, ATTACKING, HURT }
+enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 
 @onready var SPEED = randi_range(70, 130)
 @onready var health = MAX_HEALTH
@@ -28,9 +28,10 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	if health <= 0:
 		die()
-		
+	
 	follow_player()
-		
+	
+	# transition between idle and run based on navigation finished
 	if navigation_agent.is_navigation_finished():
 		if state == GOBLIN_STATE.RUN:
 			state = GOBLIN_STATE.IDLE
@@ -38,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		if state == GOBLIN_STATE.IDLE:
 			state = GOBLIN_STATE.RUN
 	
+	# only in run state, move in navigation direction
 	if state == GOBLIN_STATE.RUN:
 		var next_position = navigation_agent.get_next_path_position()
 		var direction = global_position.direction_to(next_position)
@@ -55,8 +57,8 @@ func _physics_process(delta: float) -> void:
 		else:
 			sprite.flip_h = false
 			attack_collision.scale.x = 1
-	
 	else:
+		# in other states, passively stop with friction
 		velocity = lerp(velocity, Vector2(0, 0), 0.1)
 	
 	move_and_slide()
@@ -73,11 +75,10 @@ func follow_player():
 
 func take_damage(damage, source: Node2D):
 	health = max(health - damage, 0)
-	animation_player.play("hurt")
 	state = GOBLIN_STATE.HURT
 	velocity = source.position.direction_to(position) * KNOCK_BACK_DISTANCE
-	print(health)
-	
+	animation_player.play("hurt")
+
 
 func die():
 	queue_free()
@@ -87,37 +88,44 @@ func set_state(new_state: GOBLIN_STATE):
 	var prev_state = state
 	state = new_state
 	
-	if prev_state == GOBLIN_STATE.ATTACKING:
-		attack_collision.disabled = true
-		
+	# events that happen once during state change
 	
+	# disable attack collision shape
+	# when exiting attack state, finished or interrupted
+	# or when exiting hurt state, to handle edge case
+	if prev_state in [GOBLIN_STATE.ATTACKING, GOBLIN_STATE.HURT]:
+		attack_collision.disabled = true
+	
+	# when entering each new state, play animation. In addition:
+	# - idle: prepare for casting
+	# - casting: prepare for attacking
+	# - attacking: enable attack collision shape
 	match new_state:
 		GOBLIN_STATE.IDLE:
-			sprite.play("idle")
 			attack_cooldown_timer.start(ATTACK_COOLDOWN_SECONDS)
+			sprite.play("idle")
 		
 		GOBLIN_STATE.RUN:
 			sprite.play("run")
-		
-		GOBLIN_STATE.ATTACK_COOLDOWN:
-			sprite.play("idle")
 		
 		GOBLIN_STATE.ATTACK_CASTING:
 			sprite.play("attack_casting")
 			attack_cast_delay_timer.start(ATTACK_CAST_DELAY_SECONDS)
 		
 		GOBLIN_STATE.ATTACKING:
-			sprite.play("attacking")
 			attack_collision.disabled = false
+			sprite.play("attacking")
 		
 		GOBLIN_STATE.HURT:
 			sprite.play("hurt")
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
+	# careful, only move in run state
 	if state == GOBLIN_STATE.RUN:
 		velocity = safe_velocity
 
-
+# for states that should end after its animation,
+# signal from animation finished, to switch back to (default) idle state
 func _on_sprite_animation_finished() -> void:
 	if state in [GOBLIN_STATE.ATTACKING, GOBLIN_STATE.HURT]:
 		state = GOBLIN_STATE.IDLE
@@ -129,7 +137,6 @@ func _on_attack_cooldown_timer_timeout() -> void:
 func _on_attack_cast_delay_timer_timeout() -> void:
 	if state == GOBLIN_STATE.ATTACK_CASTING:
 		state = GOBLIN_STATE.ATTACKING
-
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if "player" in body.get_groups():

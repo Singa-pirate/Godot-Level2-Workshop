@@ -235,7 +235,8 @@ script = ExtResource("1_boaf0")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_vfpfe")
-animation = &"attacking"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-1.19209e-07, 24)

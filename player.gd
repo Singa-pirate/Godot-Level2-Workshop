@@ -27,11 +27,13 @@ func _physics_process(delta: float) -> void:
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y = Input.get_axis("ui_up", "ui_down")
 	
+	# check transition between idle and run
 	if state == PLAYER_STATE.IDLE and (direction_x or direction_y):
 		state = PLAYER_STATE.RUN
 	elif state == PLAYER_STATE.RUN and not (direction_x or direction_y):
 		state = PLAYER_STATE.IDLE
-		
+	
+	# only in run state, player can control movement with input
 	if state == PLAYER_STATE.RUN:
 		velocity = Vector2(direction_x, direction_y) * SPEED
 		state = PLAYER_STATE.RUN
@@ -48,11 +50,14 @@ func _physics_process(delta: float) -> void:
 			attack2_collision.scale.x = 1
 			attack3_collision.scale.x = 1
 	else:
+		# in other states, character passively stops with friction
 		velocity = lerp(velocity, Vector2.ZERO, 0.2)
 	
 	if Input.is_action_just_pressed("attack"):
+		# only in idle or run state, player can attack with input
 		if state not in [PLAYER_STATE.IDLE, PLAYER_STATE.RUN]:
 			return
+		# change state based on combo attack progress
 		match prev_attack_state:
 			PLAYER_STATE.ATTACK_1:
 				state = PLAYER_STATE.ATTACK_2
@@ -74,7 +79,10 @@ func set_state(new_state: PLAYER_STATE):
 	var prev_state = state
 	state = new_state
 	
+	# events that happen once during state change
 	match prev_state:
+		# disable collision shape of attack
+		# on player attack finish / interrupt
 		PLAYER_STATE.ATTACK_1:
 			attack1_collision.disabled = true
 			record_temp_prev_attack_state(prev_state)
@@ -85,40 +93,45 @@ func set_state(new_state: PLAYER_STATE):
 		PLAYER_STATE.ATTACK_3:
 			attack3_collision.disabled = true
 			record_temp_prev_attack_state(prev_state)
-			
+		
+		# to handle an edge case (player hurt while attacking)
+		PLAYER_STATE.HURT:
+			attack1_collision.disabled = true
+			attack2_collision.disabled = true
+			attack3_collision.disabled = true
 	
-	# events that happen once during state change
 	match new_state:
 		PLAYER_STATE.IDLE:
-			velocity = Vector2.ZERO
 			sprite.play("idle")
+			velocity = Vector2.ZERO
 		
 		PLAYER_STATE.RUN:
 			sprite.play("run")
 		
 		PLAYER_STATE.ATTACK_1:
-			sprite.play("attack_1")
 			attack1_collision.disabled = false
+			sprite.play("attack_1")
 		
 		PLAYER_STATE.ATTACK_2:
-			sprite.play("attack_2")
 			attack2_collision.disabled = false
+			sprite.play("attack_2")
 		
 		PLAYER_STATE.ATTACK_3:
-			sprite.play("attack_3")
 			attack3_collision.disabled = false
+			sprite.play("attack_3")
 			
 		PLAYER_STATE.HURT:
 			sprite.play("hurt")
-
+		
 func record_temp_prev_attack_state(state: PLAYER_STATE):
 	prev_attack_state = state
-	prev_attack_state_timer.start()
+	prev_attack_state_timer.start() # to clear this temp record
 
 func clear_prev_attack_state():
 	prev_attack_state = PLAYER_STATE.IDLE
 
 func _on_sprite_animation_finished() -> void:
+	# means this state should end, switch back to (default) idle state
 	if state in [PLAYER_STATE.ATTACK_1, PLAYER_STATE.ATTACK_2,
 				PLAYER_STATE.ATTACK_3, PLAYER_STATE.HURT]:
 		state = PLAYER_STATE.IDLE
