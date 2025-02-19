@@ -1,0 +1,147 @@
+[gd_scene load_steps=20 format=3 uid="uid://hsx31vtj8q8s"]
+
+[ext_resource type="Script" path="res://dynamite.gd" id="1_r7ifm"]
+[ext_resource type="Texture2D" uid="uid://lehcg7tql8qy" path="res://assets/Tiny Swords/Factions/Goblins/Troops/TNT/Dynamite/Dynamite.png" id="2_2if2p"]
+[ext_resource type="Texture2D" uid="uid://bkhv6vkhxm6wf" path="res://assets/Tiny Swords/Effects/Explosion/Explosions.png" id="3_uwieh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8b6n"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yunv"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7kai"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o2vb"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xsji"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o518"]
+atlas = ExtResource("2_2if2p")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6v4cn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8b6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yunv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7kai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3o2vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xsji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o518")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfysj"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeyts"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sokjb"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4lwi"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikykr"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvlj3"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdijv"]
+atlas = ExtResource("3_uwieh")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6xvht"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nfysj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeyts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sokjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4lwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikykr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvlj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdijv")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v7hft"]
+
+[node name="Dynamite" type="Node2D"]
+z_index = 100
+script = ExtResource("1_r7ifm")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+angular_velocity = -10.472
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D"]
+z_index = 100
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6v4cn")
+autoplay = "default"
+frame_progress = 0.97339
+
+[node name="explosion" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="explosion"]
+sprite_frames = SubResource("SpriteFrames_6xvht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="explosion"]
+scale = Vector2(3.36689, 3.36689)
+shape = SubResource("CircleShape2D_v7hft")
+disabled = true
+
+[connection signal="body_entered" from="explosion" to="." method="_on_explosion_body_entered"]
+[connection signal="animation_finished" from="explosion/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

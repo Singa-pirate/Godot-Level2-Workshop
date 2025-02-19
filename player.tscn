@@ -241,7 +241,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfiin"]
 radius = 12.0
-height = 44.1977
+height = 64.8233
 
 [sub_resource type="Animation" id="Animation_sohyh"]
 length = 0.001
@@ -282,7 +282,7 @@ _data = {
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_ubvl6")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -292,9 +292,9 @@ animation = &"idle"
 autoplay = "idle"
 offset = Vector2(0, -10)
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 24)
-scale = Vector2(1.45681, 0.678768)
+[node name="Hurtbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 17)
+scale = Vector2(1.39658, 0.607229)
 shape = SubResource("CapsuleShape2D_rfiin")
 
 [node name="Attack1_Hitbox" type="Area2D" parent="."]

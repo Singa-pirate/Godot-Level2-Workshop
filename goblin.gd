@@ -2,13 +2,13 @@ extends CharacterBody2D
 
 const MAX_HEALTH = 100
 const KNOCK_BACK_DISTANCE = 50
-const damage = 10
+const damage = 5
 const ATTACK_COOLDOWN_SECONDS = 0.5
 const ATTACK_CAST_DELAY_SECONDS = 0.5
 
 enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 
-@onready var SPEED = randi_range(70, 130)
+@onready var SPEED = randi_range(70, 200)
 @onready var health = MAX_HEALTH
 @onready var state = GOBLIN_STATE.IDLE : set = set_state
 
@@ -81,6 +81,7 @@ func take_damage(damage, source: Node2D):
 
 
 func die():
+	get_parent().update_goblin_count(-1)
 	queue_free()
 
 

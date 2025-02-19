@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq5pbsc6njog2"]
+[gd_scene load_steps=8 format=3 uid="uid://dq5pbsc6njog2"]
 
+[ext_resource type="Script" path="res://level_1.gd" id="1_1k2al"]
 [ext_resource type="PackedScene" uid="uid://bo77q1ensq18" path="res://map.tscn" id="1_vx5yf"]
 [ext_resource type="PackedScene" uid="uid://buc3qyhvl7jkv" path="res://rock.tscn" id="2_5xh08"]
 [ext_resource type="PackedScene" uid="uid://dhm3k0sy8xvjm" path="res://goblin.tscn" id="2_k1qr0"]
 [ext_resource type="PackedScene" uid="uid://yjlrreldumg4" path="res://player.tscn" id="3_2b4x0"]
+[ext_resource type="PackedScene" uid="uid://yv5lm734v6hn" path="res://boss.tscn" id="5_tm3pf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1iwoq"]
 vertices = PackedVector2Array(731, 496, 724.328, 464.328, 730, 487, 853, 748, 1534, 582, 1591, 578, 1329, 874, 1299, 871, 1800, 111, 1800, 1203, 1630, 553, 1618, 496, 1478, 560, 841, 691, 725.789, 442.695, 721.383, 450.328, 719, 439, 740.859, 410.688, 1373, 966, 1361, 909, 882, 480, 870, 423, 1495, 479, 1493, 482.453, 1488.86, 483.688, 814, 773, 1216.79, 928.695, 1212, 937, 517, 919, 505, 862, 757, 777, 779, 653, 786, 509, 809, 656, 843, 505, 1473.79, 515.695, 1469, 524, 1586, 461, 132, 111, 1556, 458, 838, 388, 1238, 892, 1236, 895.453, 1231.86, 896.688, 687, 404, 692, 521, 718, 674, 635, 525, 716, 677.453, 711.859, 678.688, 1221, 973, 132, 1203, 478, 944, 1334, 991, 1277, 995, 421, 948, 365, 926, 356, 890, 360.789, 881.695, 375.859, 849.688, 380, 848.453, 382, 845, 443, 824, 696.789, 710.695, 692, 719, 473, 827, 579, 503, 701, 755, 747, 406, 745, 409.453, 596, 422, 594, 425.453, 589.859, 426.688, 808, 385, 657, 401, 574.789, 458.695, 570, 467)
@@ -14,6 +16,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(140, 119, 1776, 127, 17
 
 [node name="Level1" type="Node2D" parent="."]
 y_sort_enabled = true
+script = ExtResource("1_1k2al")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Level1"]
 y_sort_enabled = true
@@ -42,13 +45,17 @@ position = Vector2(793, 454)
 position = Vector2(428, 893)
 
 [node name="Goblin" parent="Level1" instance=ExtResource("2_k1qr0")]
-position = Vector2(339, 264)
+position = Vector2(1204, 1156)
 
 [node name="Goblin2" parent="Level1" instance=ExtResource("2_k1qr0")]
-position = Vector2(949, 303)
+position = Vector2(1719, 480)
 
 [node name="Goblin3" parent="Level1" instance=ExtResource("2_k1qr0")]
-position = Vector2(299, 522)
+position = Vector2(1518, 964)
 
 [node name="Player" parent="Level1" instance=ExtResource("3_2b4x0")]
-position = Vector2(983, 661)
+position = Vector2(499, 238)
+
+[node name="Boss" parent="Level1" instance=ExtResource("5_tm3pf")]
+position = Vector2(1695, 1087)
+scale = Vector2(0.805646, 0.805646)
