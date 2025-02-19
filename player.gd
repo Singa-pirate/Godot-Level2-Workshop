@@ -3,9 +3,9 @@ extends CharacterBody2D
 const MAX_HEALTH = 100
 const KNOCK_BACK_DISTANCE = 200
 const SPEED = 300.0
-const ATTACK_1_DAMAGE = 5
-const ATTACK_2_DAMAGE = 10
-const ATTACK_3_DAMAGE = 20
+const ATTACK_1_DAMAGE = 10
+const ATTACK_2_DAMAGE = 15
+const ATTACK_3_DAMAGE = 25
 
 enum PLAYER_STATE { IDLE, RUN, ATTACK_1, ATTACK_2, ATTACK_3, HURT }
 
@@ -14,6 +14,7 @@ enum PLAYER_STATE { IDLE, RUN, ATTACK_1, ATTACK_2, ATTACK_3, HURT }
 var prev_attack_state: PLAYER_STATE
 
 @onready var health = MAX_HEALTH
+@onready var health_bar = $UI/HealthBar
 @onready var sprite = $Sprite
 @onready var animation_player = $AnimationPlayer
 @onready var attack1_collision = $Attack1_Hitbox/CollisionPolygon2D
@@ -24,6 +25,9 @@ var prev_attack_state: PLAYER_STATE
 
 
 func _physics_process(delta: float) -> void:
+	if health <= 0:
+		die()
+	
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y = Input.get_axis("ui_up", "ui_down")
 	
@@ -70,10 +74,13 @@ func _physics_process(delta: float) -> void:
 
 func take_damage(damage, source: Node2D):
 	health = max(health - damage, 0)
+	health_bar.value = float(health) / MAX_HEALTH * 100
 	velocity = source.position.direction_to(position) * KNOCK_BACK_DISTANCE
 	animation_player.play("hurt")
 	state = PLAYER_STATE.HURT
-	
+
+func die():
+	queue_free()
 	
 func set_state(new_state: PLAYER_STATE):
 	var prev_state = state

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://hsx31vtj8q8s"]
+[gd_scene load_steps=18 format=3 uid="uid://hsx31vtj8q8s"]
 
 [ext_resource type="Script" path="res://dynamite.gd" id="1_r7ifm"]
 [ext_resource type="Texture2D" uid="uid://lehcg7tql8qy" path="res://assets/Tiny Swords/Factions/Goblins/Troops/TNT/Dynamite/Dynamite.png" id="2_2if2p"]
@@ -74,14 +74,6 @@ region = Rect2(768, 0, 192, 192)
 atlas = ExtResource("3_uwieh")
 region = Rect2(960, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hvlj3"]
-atlas = ExtResource("3_uwieh")
-region = Rect2(1152, 0, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hdijv"]
-atlas = ExtResource("3_uwieh")
-region = Rect2(1344, 0, 192, 192)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_6xvht"]
 animations = [{
 "frames": [{
@@ -104,16 +96,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ikykr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hvlj3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hdijv")
 }],
 "loop": false,
 "name": &"explode",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v7hft"]

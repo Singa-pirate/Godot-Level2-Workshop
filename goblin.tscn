@@ -1,7 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://dhm3k0sy8xvjm"]
+[gd_scene load_steps=32 format=3 uid="uid://dhm3k0sy8xvjm"]
 
 [ext_resource type="Script" path="res://goblin.gd" id="1_boaf0"]
 [ext_resource type="Texture2D" uid="uid://dqtgnw2rf171k" path="res://assets/Tiny Swords/Factions/Goblins/Troops/Torch/Blue/Torch_Blue.png" id="1_qu61w"]
+[ext_resource type="Texture2D" uid="uid://bjk44uhrjqpbx" path="res://assets/Pixel Health Bar/Bar/empty health bar.png" id="3_35t1e"]
+[ext_resource type="Texture2D" uid="uid://dbfbeg1khr36f" path="res://assets/Pixel Health Bar/Health/health.png" id="4_x5w2u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k73rb"]
 atlas = ExtResource("1_qu61w")
@@ -269,6 +271,23 @@ one_shot = true
 
 [node name="AttackCastDelayTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="UI"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = -47.0
+offset_right = 103.0
+offset_bottom = -7.0
+scale = Vector2(0.395548, 0.648702)
+value = 100.0
+texture_under = ExtResource("3_35t1e")
+texture_progress = ExtResource("4_x5w2u")
 
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

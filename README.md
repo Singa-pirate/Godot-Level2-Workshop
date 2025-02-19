@@ -15,3 +15,4 @@ Thus, download the **before** branch before coming to workshops. If needed, you 
 
 ## Credits
 Game assets by [itch.io creator](https://pixelfrog-assets.itch.io/tiny-swords)
+Health bar assets by [itch.io creator](https://wolf-viciox.itch.io/health-bar)

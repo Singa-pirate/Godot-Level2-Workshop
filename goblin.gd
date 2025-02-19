@@ -15,6 +15,7 @@ enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 @onready var player : CharacterBody2D = get_parent().get_node("Player")
 @onready var navigation_agent = $NavigationAgent2D
 @onready var target
+@onready var health_bar = $UI/HealthBar
 @onready var sprite = $Sprite
 @onready var animation_player = $AnimationPlayer
 @onready var attack_cooldown_timer = $AttackCooldownTimer
@@ -75,6 +76,7 @@ func follow_player():
 
 func take_damage(damage, source: Node2D):
 	health = max(health - damage, 0)
+	health_bar.value = float(health) / MAX_HEALTH * 100
 	state = GOBLIN_STATE.HURT
 	velocity = source.position.direction_to(position) * KNOCK_BACK_DISTANCE
 	animation_player.play("hurt")

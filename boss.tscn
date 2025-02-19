@@ -1,7 +1,33 @@
-[gd_scene load_steps=38 format=3 uid="uid://yv5lm734v6hn"]
+[gd_scene load_steps=40 format=3 uid="uid://yv5lm734v6hn"]
 
 [ext_resource type="Texture2D" uid="uid://boat3k2l54dw5" path="res://assets/Tiny Swords/Factions/Goblins/Troops/TNT/Red/TNT_Red.png" id="1_7rl3o"]
 [ext_resource type="Script" path="res://boss.gd" id="1_j2mc2"]
+[ext_resource type="Texture2D" uid="uid://ctwi4ile0f8jx" path="res://assets/Pixel Health Bar/Bar/no health bar.png" id="3_xnbu7"]
+[ext_resource type="Texture2D" uid="uid://dbfbeg1khr36f" path="res://assets/Pixel Health Bar/Health/health.png" id="4_gnydy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dbki"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ioxe"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0vvj"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv186"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uj5gi"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4ver"]
+atlas = ExtResource("1_7rl3o")
+region = Rect2(960, 192, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eecke"]
 atlas = ExtResource("1_7rl3o")
@@ -87,32 +113,31 @@ region = Rect2(384, 384, 192, 192)
 atlas = ExtResource("1_7rl3o")
 region = Rect2(576, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5dbki"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(0, 192, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ioxe"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(192, 192, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e0vvj"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(384, 192, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jv186"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(576, 192, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uj5gi"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(768, 192, 192, 192)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n4ver"]
-atlas = ExtResource("1_7rl3o")
-region = Rect2(960, 192, 192, 192)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_8n1fy"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dbki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ioxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0vvj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv186")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj5gi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4ver")
+}],
+"loop": true,
+"name": &"chase",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eecke")
@@ -195,29 +220,6 @@ animations = [{
 "loop": true,
 "name": &"throw",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5dbki")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ioxe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e0vvj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jv186")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uj5gi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n4ver")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f2n0f"]
@@ -231,22 +233,6 @@ height = 154.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kwidl"]
 radius = 142.0
 height = 510.0
-
-[sub_resource type="Animation" id="Animation_sqgft"]
-resource_name = "hurt"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_eurix"]
 length = 0.001
@@ -273,6 +259,22 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_sqgft"]
+resource_name = "hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_d4671"]
@@ -321,7 +323,7 @@ script = ExtResource("1_j2mc2")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3.27596, 3.27596)
 sprite_frames = SubResource("SpriteFrames_8n1fy")
-animation = &"spawn"
+animation = &"chase"
 autoplay = "idle"
 
 [node name="Hurtbox" type="CollisionShape2D" parent="."]
@@ -370,6 +372,7 @@ libraries = {
 }
 
 [node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 autostart = true
 
@@ -379,6 +382,23 @@ one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="UI"]
+layout_mode = 0
+offset_left = -135.11
+offset_top = 109.28
+offset_right = -7.10989
+offset_bottom = 149.28
+scale = Vector2(2.02871, 2.67329)
+value = 100.0
+texture_under = ExtResource("3_xnbu7")
+texture_progress = ExtResource("4_gnydy")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
