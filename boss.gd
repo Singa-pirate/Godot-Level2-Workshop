@@ -22,8 +22,7 @@ enum BOSS_STATE { IDLE, CHASE, DASH, THROW, SPAWN }
 @onready var player = get_parent().get_node("Player")
 @onready var health_bar = $UI/HealthBar
 @onready var sprite = $Sprite
-@onready var ray_cast = $RayCast2D
-@onready var player_detection = $PlayerDetection
+# TODO: access raycast and player detection
 @onready var navigation_agent = $NavigationAgent2D
 @onready var animation_hurt = $AnimationHurt
 @onready var animation_throw = $AnimationThrow
@@ -48,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	
 	# not in dash state, where target is a position beyond player
 	if state != BOSS_STATE.DASH:
-		follow_player()
+		follow_target()
 	
 	# only navigate in chase or dash states
 	if state in [BOSS_STATE.CHASE, BOSS_STATE.DASH]:
@@ -84,7 +83,7 @@ func _physics_process(delta: float) -> void:
 	
 
 ##### navigation
-func follow_player():
+func follow_target():
 	if target:
 		navigation_agent.target_position = target.global_position
 
@@ -110,14 +109,15 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 ###
 
 func look_for_player():
-	var is_player_nearby = player in player_detection.get_overlapping_bodies()
-	ray_cast.rotation = global_position.direction_to(player.global_position).angle()
-	var is_player_seen = ray_cast.get_collider() == player
+	# TODO: mechanism to check if player is nearby & seen by boss
+	var is_player_nearby
+	var is_player_seen
 	
-	if is_player_nearby and is_player_seen:
-		state = BOSS_STATE.DASH
-	elif is_player_seen:
-		state = BOSS_STATE.THROW
+	print("Player nearby: ", is_player_nearby)
+	print("Player seen:", is_player_seen)
+	
+	# TODO: switch to dash state if nearby & seen
+	# switch to throw state if not nearby but seen
 
 func set_state(new_state: BOSS_STATE):
 	var prev_state = state
@@ -140,76 +140,45 @@ func set_state(new_state: BOSS_STATE):
 			sprite.play("dash")
 		
 		BOSS_STATE.THROW:
-			sprite.play("throw")
-			sprite.pause()
-			remaining_dynamites = randi_range(3, 5)
-			animation_throw.play("throw_dynamite")
+			pass
+			# TODO: actions when entering throw state
+			# set remaining number of dynamites
+			# switch to throw sprite and pause
+			# play throw animation
 		
 		BOSS_STATE.SPAWN:
 			sprite.play("spawn")
-			remaining_goblins_to_spawn = randi_range(2, 4)
-			spawn_timer.start()
+			# TODO: actions when entering spawn state
+			# set remaining number of goblins to spawn
+			# start timer
 
 ##### idle state
-func _on_idle_timer_timeout() -> void:
-	# spawn goblins with a probability based on number of goblins
-	var goblin_count = get_parent().goblin_count
-	var spawn_probability
-	if goblin_count < 3:
-		spawn_probability = 30
-	elif goblin_count < 6:
-		spawn_probability = 15
-	elif goblin_count < 9:
-		spawn_probability = 10
-	else:
-		spawn_probability = 0
+func enter_spawn_with_probability():
+	pass
+	# TODO: with a probability, switch to spawn state to summon goblins
+	# probability is based on current number of goblins
 
-	if randi() % 100 < spawn_probability:
-		state = BOSS_STATE.SPAWN
-		return
+func _on_idle_timer_timeout() -> void:
+	enter_spawn_with_probability()
 	
-	# if player is nearby, use special skill to attack
-	look_for_player()
 	if state != BOSS_STATE.IDLE:
 		return
 
-	# no special skill, continue chasing
 	state = BOSS_STATE.CHASE
 ###
 
 ##### throw state
-func throw_dynamite():
-	var dynamite = DYNAMITE.instantiate()
-	dynamite.start_position = global_position
-	dynamite.end_position = player.global_position
-	get_parent().add_child(dynamite)
+# TODO: function to throw a dynamite towards player position
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "throw_dynamite":
-		remaining_dynamites -= 1
-		if remaining_dynamites > 0:
-			animation_throw.play("throw_dynamite")
-		else:
-			state = BOSS_STATE.IDLE
+# TODO: mechanism to throw for a certain number of times
+# switch to idle state after finish
 ###
 
 ##### spawn state
-func spawn_goblin():
-	var goblin = GOBLIN.instantiate()
-	goblin.global_position.x = randf_range(MAP_POSITION_MIN.x, MAP_POSITION_MAX.x)
-	goblin.global_position.y = randf_range(-MAP_POSITION_MIN.y, -MAP_POSITION_MAX.y)
-	get_parent().add_child(goblin)
-	get_parent().update_goblin_count(1)
+# TODO: define a function to spawn 1 goblin at random map position
 
-func _on_spawn_timer_timeout() -> void:
-	if state != BOSS_STATE.SPAWN:
-		return
-	spawn_goblin()
-	remaining_goblins_to_spawn -= 1
-	if remaining_goblins_to_spawn > 0:
-		spawn_timer.start()
-	else:
-		state = BOSS_STATE.IDLE
+# TODO: mechanism to spawn goblin for a certain number of times
+# switch to idle state after finish
 ###
 
 func _on_chase_timer_timeout() -> void:

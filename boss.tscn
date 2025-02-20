@@ -341,11 +341,6 @@ position = Vector2(-1, 47)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_8jqbk")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-scale = Vector2(1, 10)
-target_position = Vector2(800, 0)
-collision_mask = 5
-
 [node name="PlayerDetection" type="Area2D" parent="."]
 scale = Vector2(0.82354, 0.786108)
 
