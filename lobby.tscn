@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://flrgxl35lngd"]
+
+[ext_resource type="Script" path="res://lobby.gd" id="1_sv20j"]
+
+[sub_resource type="Theme" id="Theme_jrl1h"]
+default_font_size = 24
+
+[sub_resource type="Theme" id="Theme_20nmm"]
+default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_5j5o8"]
+default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_dup8m"]
+default_font_size = 32
+
+[sub_resource type="Theme" id="Theme_r76nr"]
+default_font_size = 24
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sv20j")
+
+[node name="NameLineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 77.0
+offset_right = 436.0
+offset_bottom = 124.0
+theme = SubResource("Theme_jrl1h")
+placeholder_text = " Your name here"
+
+[node name="HostGameButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 172.0
+offset_right = 262.0
+offset_bottom = 229.0
+theme = SubResource("Theme_20nmm")
+text = "Host game"
+
+[node name="JoinGameButton" type="Button" parent="."]
+offset_left = 55.0
+offset_top = 279.0
+offset_right = 262.0
+offset_bottom = 336.0
+theme = SubResource("Theme_5j5o8")
+text = "Join game"
+
+[node name="StartGameButton" type="Button" parent="."]
+visible = false
+offset_left = 333.0
+offset_top = 171.0
+offset_right = 456.0
+offset_bottom = 228.0
+theme = SubResource("Theme_dup8m")
+text = "Start!"
+
+[node name="Log" type="Label" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 380.0
+offset_right = 641.0
+offset_bottom = 607.0
+theme = SubResource("Theme_r76nr")
+
+[node name="DisplayNamesTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="pressed" from="HostGameButton" to="." method="_on_host_game_button_pressed"]
+[connection signal="pressed" from="JoinGameButton" to="." method="_on_join_game_button_pressed"]
+[connection signal="pressed" from="StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="timeout" from="DisplayNamesTimer" to="." method="_on_display_names_timer_timeout"]
