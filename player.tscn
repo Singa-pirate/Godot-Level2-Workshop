@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://yjlrreldumg4"]
+[gd_scene load_steps=40 format=3 uid="uid://yjlrreldumg4"]
 
 [ext_resource type="Texture2D" uid="uid://behsasv71g7k0" path="res://assets/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_p7vhx"]
 [ext_resource type="Script" path="res://player.gd" id="1_ubvl6"]
@@ -282,6 +282,47 @@ _data = {
 "hurt": SubResource("Animation_v5ro2")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kdofb"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Sprite:animation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sprite:frame")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Sprite:flip_h")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Sprite:modulate")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("UI/HealthBar:value")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("prev_attack_state_timer:wait_time")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Attack1_Hitbox/CollisionPolygon2D:scale")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Attack2_Hitbox/CollisionPolygon2D:scale")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Attack3_Hitbox/CollisionPolygon2D:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Attack1_Hitbox/CollisionPolygon2D:disabled")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Attack2_Hitbox/CollisionPolygon2D:disabled")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("Attack3_Hitbox/CollisionPolygon2D:disabled")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_mask = 13
@@ -349,6 +390,9 @@ scale = Vector2(0.520939, 1)
 value = 100.0
 texture_under = ExtResource("3_4gnrg")
 texture_progress = ExtResource("4_duhmc")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kdofb")
 
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="animation_looped" from="Sprite" to="." method="_on_sprite_animation_looped"]

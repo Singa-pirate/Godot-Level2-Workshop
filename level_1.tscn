@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bk2jjiw83fslw"]
+[gd_scene load_steps=6 format=3 uid="uid://bk2jjiw83fslw"]
 
 [ext_resource type="Script" path="res://level_1.gd" id="1_27ynn"]
 [ext_resource type="PackedScene" uid="uid://bo77q1ensq18" path="res://map.tscn" id="2_ggeja"]
 [ext_resource type="PackedScene" uid="uid://buc3qyhvl7jkv" path="res://rock.tscn" id="3_f0i7e"]
-[ext_resource type="PackedScene" uid="uid://yjlrreldumg4" path="res://player.tscn" id="4_uiuxc"]
 [ext_resource type="PackedScene" uid="uid://yv5lm734v6hn" path="res://boss.tscn" id="5_xwrtb"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1iwoq"]
@@ -30,7 +29,7 @@ position = Vector2(1284, 940)
 position = Vector2(1541, 527)
 
 [node name="Rock" parent="NavigationRegion2D" instance=ExtResource("3_f0i7e")]
-position = Vector2(642, 470)
+position = Vector2(663, 465)
 
 [node name="Rock4" parent="NavigationRegion2D" instance=ExtResource("3_f0i7e")]
 position = Vector2(764, 722)
@@ -41,9 +40,29 @@ position = Vector2(793, 454)
 [node name="Rock6" parent="NavigationRegion2D" instance=ExtResource("3_f0i7e")]
 position = Vector2(428, 893)
 
-[node name="Player" parent="." instance=ExtResource("4_uiuxc")]
-position = Vector2(499, 238)
-
 [node name="Boss" parent="." instance=ExtResource("5_xwrtb")]
 position = Vector2(1085, 754)
 scale = Vector2(0.805646, 0.805646)
+
+[node name="Players" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Goblins" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Dynamites" type="Node2D" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 5
+
+[node name="GoblinSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://goblin.tscn")
+spawn_path = NodePath("../Goblins")
+spawn_limit = 20
+
+[node name="DynamiteSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://dynamite.tscn")
+spawn_path = NodePath("../Dynamites")
+spawn_limit = 10

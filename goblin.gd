@@ -12,7 +12,7 @@ enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 @onready var health = MAX_HEALTH
 @onready var state = GOBLIN_STATE.IDLE : set = set_state
 
-@onready var player : CharacterBody2D = get_parent().get_node("Player")
+@onready var players = get_parent().get_parent().get_node("Players")
 @onready var navigation_agent = $NavigationAgent2D
 @onready var target
 @onready var health_bar = $UI/HealthBar
@@ -22,11 +22,17 @@ enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 @onready var attack_cast_delay_timer = $AttackCastDelayTimer
 @onready var attack_collision = $Attack_hitbox/CollisionPolygon2D
 
+var nearest_player
 
 func _ready():
+	set_multiplayer_authority(1)
+	nearest_player = find_nearest_player()
 	call_deferred("navigation_setup")
 
 func _physics_process(delta: float) -> void:
+	if multiplayer.get_unique_id() != get_multiplayer_authority():
+		return
+	
 	if health <= 0:
 		die()
 	
@@ -66,8 +72,17 @@ func _physics_process(delta: float) -> void:
 	
 
 func navigation_setup():
-	target = player
+	target = nearest_player
 
+func find_nearest_player():
+	var nearest_player = null
+	var min_distance = INF
+	for p in players.get_children():
+		var distance = (p.global_position - self.global_position).length()
+		if distance < min_distance:
+			nearest_player = p
+			min_distance = distance
+	return nearest_player
 
 func follow_player():
 	if target:
@@ -83,11 +98,12 @@ func take_damage(damage, source: Node2D):
 
 
 func die():
-	get_parent().update_goblin_count(-1)
+	get_parent().get_parent().update_goblin_count(-1)
 	queue_free()
 
 
 func set_state(new_state: GOBLIN_STATE):
+	nearest_player = find_nearest_player()
 	var prev_state = state
 	state = new_state
 	

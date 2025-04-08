@@ -45,6 +45,7 @@ theme = SubResource("Theme_20nmm")
 text = "Host game"
 
 [node name="JoinGameButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 55.0
 offset_top = 279.0
 offset_right = 262.0
@@ -54,6 +55,7 @@ text = "Join game"
 
 [node name="StartGameButton" type="Button" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 333.0
 offset_top = 171.0
 offset_right = 456.0

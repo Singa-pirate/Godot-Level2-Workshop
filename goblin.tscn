@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dhm3k0sy8xvjm"]
+[gd_scene load_steps=33 format=3 uid="uid://dhm3k0sy8xvjm"]
 
 [ext_resource type="Script" path="res://goblin.gd" id="1_boaf0"]
 [ext_resource type="Texture2D" uid="uid://dqtgnw2rf171k" path="res://assets/Tiny Swords/Factions/Goblins/Troops/Torch/Blue/Torch_Blue.png" id="1_qu61w"]
@@ -228,6 +228,41 @@ _data = {
 "hurt": SubResource("Animation_maltj")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_f3k3u"]
+properties/0/path = NodePath("Sprite:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Sprite:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sprite:flip_h")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimationPlayer:current_animation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("UI/HealthBar:value")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("AttackCooldownTimer:wait_time")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("AttackCastDelayTimer:wait_time")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Sprite:modulate")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Attack_hitbox/CollisionPolygon2D:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Attack_hitbox/CollisionPolygon2D:disabled")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
 [node name="Goblin" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
 collision_layer = 2
@@ -288,6 +323,9 @@ scale = Vector2(0.395548, 0.648702)
 value = 100.0
 texture_under = ExtResource("3_35t1e")
 texture_progress = ExtResource("4_x5w2u")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_f3k3u")
 
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

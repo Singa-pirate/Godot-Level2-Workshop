@@ -2,8 +2,8 @@ extends Node2D
 
 const DAMAGE = 10
 
-var start_position : Vector2
-var end_position: Vector2
+@export var start_position : Vector2
+@export var end_position: Vector2
 var a: float
 var b: float
 var c: float
@@ -18,10 +18,6 @@ var cumulative_time: float
 func _ready() -> void:
 	if not (start_position and end_position):
 		queue_free()
-	
-	# random perturbation
-	end_position.x += randf_range(-100, 100)
-	end_position.y += randf_range(-50, 50)
 	
 	explosion.global_position = end_position
 		

@@ -23,8 +23,15 @@ var prev_attack_state: PLAYER_STATE
 # preserve prev attack state to facilitate combo attack
 @onready var prev_attack_state_timer = $prev_attack_state_timer
 
+func _ready():
+	set_multiplayer_authority(int(str(self.name)))
+	global_position = Vector2(randi_range(200, 1000), randi_range(200, 1000))
+
 
 func _physics_process(delta: float) -> void:
+	if multiplayer.get_unique_id() != get_multiplayer_authority():
+		return
+	
 	if health <= 0:
 		die()
 	
