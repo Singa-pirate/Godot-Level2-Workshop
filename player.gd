@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if health <= 0:
-		die()
+		die.rpc()
 	
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y = Input.get_axis("ui_up", "ui_down")
@@ -95,8 +95,10 @@ func take_damage(damage, source: Node2D):
 	animation_player.play("hurt")
 	state = PLAYER_STATE.HURT
 
+@rpc("any_peer", "call_local", "reliable")
 func die():
-	queue_free()
+	if is_instance_valid(self):
+		queue_free()
 	
 func set_state(new_state: PLAYER_STATE):
 	var prev_state = state

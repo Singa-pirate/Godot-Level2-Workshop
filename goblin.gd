@@ -33,6 +33,12 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.get_unique_id() != get_multiplayer_authority():
 		return
 	
+	if not is_instance_valid(nearest_player):
+		nearest_player = find_nearest_player()
+		if not is_instance_valid(nearest_player):
+			state = GOBLIN_STATE.IDLE
+			return
+	
 	if health <= 0:
 		die()
 	
@@ -85,8 +91,10 @@ func find_nearest_player():
 	return nearest_player
 
 func follow_player():
-	if target:
+	if is_instance_valid(target):
 		navigation_agent.target_position = target.global_position
+	else:
+		target = find_nearest_player()
 
 
 func take_damage(damage, source: Node2D):

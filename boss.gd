@@ -46,6 +46,12 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.get_unique_id() != get_multiplayer_authority():
 		return
 	
+	if not is_instance_valid(nearest_player):
+		nearest_player = find_nearest_player()
+		if not is_instance_valid(nearest_player):
+			state = BOSS_STATE.IDLE
+			return
+	
 	if health <= 0:
 		die()
 	
@@ -92,8 +98,10 @@ func _physics_process(delta: float) -> void:
 
 ##### navigation
 func follow_player():
-	if target:
+	if is_instance_valid(target):
 		navigation_agent.target_position = target.global_position
+	elif target:
+		find_nearest_player()
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	if state in [BOSS_STATE.CHASE, BOSS_STATE.DASH]:
@@ -204,6 +212,8 @@ func _on_idle_timer_timeout() -> void:
 ##### throw state
 func throw_dynamite():
 	if multiplayer.get_unique_id() != get_multiplayer_authority():
+		return
+	if not is_instance_valid(nearest_player):
 		return
 	var dynamite = DYNAMITE.instantiate()
 	dynamite.start_position = global_position
