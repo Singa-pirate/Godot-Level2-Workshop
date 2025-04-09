@@ -20,7 +20,6 @@ enum BOSS_STATE { IDLE, CHASE, DASH, THROW, SPAWN }
 @onready var remaining_goblins_to_spawn = 0
 
 @onready var players = get_parent().get_node("Players")
-@onready var goblins = get_parent().get_node("Goblins")
 @onready var dynamites = get_parent().get_node("Dynamites")
 @onready var health_bar = $UI/HealthBar
 @onready var sprite = $Sprite
@@ -37,20 +36,12 @@ enum BOSS_STATE { IDLE, CHASE, DASH, THROW, SPAWN }
 var nearest_player
 
 func _ready():
-	set_multiplayer_authority(1)
 	await get_tree().physics_frame
 	nearest_player = find_nearest_player()
 	target = nearest_player
 
 func _physics_process(delta: float) -> void:
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	
-	if not is_instance_valid(nearest_player):
-		nearest_player = find_nearest_player()
-		if not is_instance_valid(nearest_player):
-			state = BOSS_STATE.IDLE
-			return
+	# TODO: check nearest player is still valid
 	
 	if health <= 0:
 		die()
@@ -98,10 +89,8 @@ func _physics_process(delta: float) -> void:
 
 ##### navigation
 func follow_player():
-	if is_instance_valid(target):
+	if target:
 		navigation_agent.target_position = target.global_position
-	elif target:
-		find_nearest_player()
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	if state in [BOSS_STATE.CHASE, BOSS_STATE.DASH]:
@@ -124,14 +113,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		body.take_damage(DAMAGE_DASH if state == BOSS_STATE.DASH else DAMAGE_IDLE, self)
 
 func find_nearest_player():
-	var nearest_player = null
-	var min_distance = INF
-	for p in players.get_children():
-		var distance = (p.global_position - self.global_position).length()
-		if distance < min_distance:
-			nearest_player = p
-			min_distance = distance
-	return nearest_player
+	# TODO: correct this implementation
+	return players.get_children()[0]
 ###
 
 func look_for_player():
@@ -145,9 +128,6 @@ func look_for_player():
 		state = BOSS_STATE.THROW
 
 func set_state(new_state: BOSS_STATE):
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	
 	var prev_state = state
 	state = new_state
 	
@@ -180,10 +160,6 @@ func set_state(new_state: BOSS_STATE):
 
 ##### idle state
 func _on_idle_timer_timeout() -> void:
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	
-	nearest_player = find_nearest_player()
 	# spawn goblins with a probability based on number of goblins
 	var goblin_count = get_parent().goblin_count
 	var spawn_probability
@@ -211,10 +187,6 @@ func _on_idle_timer_timeout() -> void:
 
 ##### throw state
 func throw_dynamite():
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	if not is_instance_valid(nearest_player):
-		return
 	var dynamite = DYNAMITE.instantiate()
 	dynamite.start_position = global_position
 	dynamite.end_position = nearest_player.global_position + \
@@ -222,8 +194,6 @@ func throw_dynamite():
 	dynamites.add_child(dynamite, true)
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
 	if anim_name == "throw_dynamite":
 		remaining_dynamites -= 1
 		if remaining_dynamites > 0:
@@ -237,8 +207,8 @@ func spawn_goblin():
 	var goblin = GOBLIN.instantiate()
 	goblin.global_position.x = randf_range(MAP_POSITION_MIN.x, MAP_POSITION_MAX.x)
 	goblin.global_position.y = randf_range(-MAP_POSITION_MIN.y, -MAP_POSITION_MAX.y)
-	goblins.add_child(goblin, true)
 	get_parent().update_goblin_count(1)
+	# TODO: add goblin instance to the game
 
 func _on_spawn_timer_timeout() -> void:
 	if state != BOSS_STATE.SPAWN:

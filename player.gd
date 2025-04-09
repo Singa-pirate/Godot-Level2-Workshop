@@ -27,22 +27,19 @@ var prev_attack_state: PLAYER_STATE
 var player_name: String
 
 func _ready():
-	var game_node = get_tree().get_current_scene()
-	var player_id = int(str(self.name))
-	set_multiplayer_authority(player_id)
 	global_position = Vector2(randi_range(200, 1000), randi_range(200, 1000))
-	var name_provided = game_node.get_player_info(player_id)["name"]
-	if name_provided:
-		name_label.text = name_provided
-	else:
-		name_label.text = "Player%d" % player_id
+	
+	# Uncomment after implementing multiplayer authority
+	#var game_node = get_tree().get_current_scene()
+	#var name_provided = game_node.get_player_info(player_id)["name"]
+	#if name_provided:
+		#name_label.text = name_provided
+	#else:
+		#name_label.text = "Player%d" % player_id
 
 func _physics_process(delta: float) -> void:
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	
 	if health <= 0:
-		die.rpc()
+		die()
 	
 	var direction_x := Input.get_axis("ui_left", "ui_right")
 	var direction_y = Input.get_axis("ui_up", "ui_down")
@@ -95,10 +92,8 @@ func take_damage(damage, source: Node2D):
 	animation_player.play("hurt")
 	state = PLAYER_STATE.HURT
 
-@rpc("any_peer", "call_local", "reliable")
 func die():
-	if is_instance_valid(self):
-		queue_free()
+	queue_free()
 	
 func set_state(new_state: PLAYER_STATE):
 	var prev_state = state

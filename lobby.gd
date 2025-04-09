@@ -75,11 +75,7 @@ func _on_join_game_button_pressed() -> void:
 func _on_start_game_button_pressed() -> void:
 	start_game.rpc()
 	var players_node = get_tree().get_current_scene().get_node("Level1/Players")
-	for p in players:
-		var p_info = players[p]
-		var player = PLAYER.instantiate()
-		player.name = str(p_info.id)
-		players_node.add_child(player, true)
+	# TODO: add player instances
 
 func peer_connected(id):
 	log_message("Player %d has entered the room!" % id)

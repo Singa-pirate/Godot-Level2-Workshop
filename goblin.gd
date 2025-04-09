@@ -25,20 +25,10 @@ enum GOBLIN_STATE { IDLE, RUN, ATTACK_CASTING, ATTACKING, HURT }
 var nearest_player
 
 func _ready():
-	set_multiplayer_authority(1)
 	nearest_player = find_nearest_player()
 	call_deferred("navigation_setup")
 
 func _physics_process(delta: float) -> void:
-	if multiplayer.get_unique_id() != get_multiplayer_authority():
-		return
-	
-	if not is_instance_valid(nearest_player):
-		nearest_player = find_nearest_player()
-		if not is_instance_valid(nearest_player):
-			state = GOBLIN_STATE.IDLE
-			return
-	
 	if health <= 0:
 		die()
 	
@@ -81,20 +71,11 @@ func navigation_setup():
 	target = nearest_player
 
 func find_nearest_player():
-	var nearest_player = null
-	var min_distance = INF
-	for p in players.get_children():
-		var distance = (p.global_position - self.global_position).length()
-		if distance < min_distance:
-			nearest_player = p
-			min_distance = distance
-	return nearest_player
+	return players.get_children()[0]
 
 func follow_player():
-	if is_instance_valid(target):
+	if target:
 		navigation_agent.target_position = target.global_position
-	else:
-		target = find_nearest_player()
 
 
 func take_damage(damage, source: Node2D):
@@ -111,7 +92,6 @@ func die():
 
 
 func set_state(new_state: GOBLIN_STATE):
-	nearest_player = find_nearest_player()
 	var prev_state = state
 	state = new_state
 	
