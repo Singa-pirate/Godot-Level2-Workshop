@@ -28,6 +28,7 @@ func log_message(message):
 
 @rpc('authority', 'call_local', 'reliable')
 func start_game():
+	get_parent().set_player_info(players)
 	var level = LEVEL_1.instantiate()
 	get_parent().add_child(level)
 	self.visible = false

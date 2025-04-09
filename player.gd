@@ -15,6 +15,7 @@ var prev_attack_state: PLAYER_STATE
 
 @onready var health = MAX_HEALTH
 @onready var health_bar = $UI/HealthBar
+@onready var name_label = $UI/NameLabel
 @onready var sprite = $Sprite
 @onready var animation_player = $AnimationPlayer
 @onready var attack1_collision = $Attack1_Hitbox/CollisionPolygon2D
@@ -23,10 +24,18 @@ var prev_attack_state: PLAYER_STATE
 # preserve prev attack state to facilitate combo attack
 @onready var prev_attack_state_timer = $prev_attack_state_timer
 
-func _ready():
-	set_multiplayer_authority(int(str(self.name)))
-	global_position = Vector2(randi_range(200, 1000), randi_range(200, 1000))
+var player_name: String
 
+func _ready():
+	var game_node = get_tree().get_current_scene()
+	var player_id = int(str(self.name))
+	set_multiplayer_authority(player_id)
+	global_position = Vector2(randi_range(200, 1000), randi_range(200, 1000))
+	var name_provided = game_node.get_player_info(player_id)["name"]
+	if name_provided:
+		name_label.text = name_provided
+	else:
+		name_label.text = "Player%d" % player_id
 
 func _physics_process(delta: float) -> void:
 	if multiplayer.get_unique_id() != get_multiplayer_authority():

@@ -1,7 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq5pbsc6njog2"]
+[gd_scene load_steps=3 format=3 uid="uid://dq5pbsc6njog2"]
 
 [ext_resource type="PackedScene" uid="uid://flrgxl35lngd" path="res://lobby.tscn" id="1_0gmsl"]
+[ext_resource type="Script" path="res://game.gd" id="1_sjo4v"]
 
 [node name="Game" type="Node"]
+script = ExtResource("1_sjo4v")
 
 [node name="Lobby" parent="." instance=ExtResource("1_0gmsl")]
